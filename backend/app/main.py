@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from contextlib import asynccontextmanager
-from collections import Counter
+from collections import Counter, defaultdict
 from pathlib import Path
 import tempfile
 
@@ -19,6 +19,8 @@ from app.schemas import (
     ProductActionRead,
     ReportRead,
     TrendPoint,
+    TrendSummaryRead,
+    TrendCategoryRead,
     VocItemRead,
     WebhookPushRequest,
     WebhookPushResult,
@@ -120,6 +122,98 @@ def trends(session: Session = Depends(get_session)) -> list[TrendPoint]:
     items = session.exec(select(VocItem)).all()
     counts = Counter(item.created_at.date().isoformat() for item in items)
     return [TrendPoint(date=date, count=count) for date, count in sorted(counts.items())]
+
+
+def issue_type_label(value: str) -> str:
+    return value.replace("_", " ").title()
+
+
+def period_key(item: VocItem) -> tuple[int, int]:
+    iso = item.created_at.isocalendar()
+    return (iso.year, iso.week)
+
+
+@app.get("/api/trends/summary", response_model=TrendSummaryRead)
+def trend_summary(session: Session = Depends(get_session)) -> TrendSummaryRead:
+    items = session.exec(select(VocItem).order_by(VocItem.created_at.asc())).all()
+    if not items:
+        return TrendSummaryRead(current_period=None, previous_period=None, chart=[], categories=[])
+
+    period_keys = sorted({period_key(item) for item in items})
+    period_labels = {key: f"Week {index + 1}" for index, key in enumerate(period_keys)}
+    categories = sorted({issue_type_label(item.item_type.value) for item in items})
+    counts: dict[tuple[int, int], Counter[str]] = defaultdict(Counter)
+
+    for item in items:
+        counts[period_key(item)][issue_type_label(item.item_type.value)] += 1
+
+    chart: list[dict[str, int | str]] = []
+    for key in period_keys:
+        row: dict[str, int | str] = {"period": period_labels[key]}
+        for category in categories:
+            row[category] = counts[key].get(category, 0)
+        chart.append(row)
+
+    current_key = period_keys[-1]
+    previous_key = period_keys[-2] if len(period_keys) > 1 else None
+    current_label = period_labels[current_key]
+    previous_label = period_labels[previous_key] if previous_key else None
+
+    rows: list[TrendCategoryRead] = []
+    for category in categories:
+        current_items = [
+            item
+            for item in items
+            if period_key(item) == current_key and issue_type_label(item.item_type.value) == category
+        ]
+        previous_items = [
+            item
+            for item in items
+            if previous_key and period_key(item) == previous_key and issue_type_label(item.item_type.value) == category
+        ]
+        current_count = len(current_items)
+        previous_count = len(previous_items)
+        if current_count == 0 and previous_count == 0:
+            continue
+
+        if previous_count == 0 and current_count > 0:
+            change_percent = None
+            trend_label = "New"
+        elif current_count > previous_count:
+            change_percent = round(((current_count - previous_count) / previous_count) * 100, 1)
+            trend_label = "Rising"
+        elif current_count < previous_count:
+            change_percent = round(((current_count - previous_count) / previous_count) * 100, 1)
+            trend_label = "Converging"
+        else:
+            change_percent = 0
+            trend_label = "Persistent"
+
+        representative_items = current_items or previous_items
+        source_ids: list[str] = []
+        for item in representative_items:
+            source_ids.extend(split_ids(item.source_ticket_ids))
+
+        rows.append(
+            TrendCategoryRead(
+                category=category,
+                current_count=current_count,
+                previous_count=previous_count,
+                change_percent=change_percent,
+                trend_label=trend_label,
+                high_severity_count=sum(1 for item in current_items if item.severity.value == "high"),
+                source_ticket_ids=list(dict.fromkeys(source_ids))[:5],
+            )
+        )
+
+    label_order = {"New": 0, "Rising": 1, "Persistent": 2, "Converging": 3}
+    rows.sort(key=lambda row: (label_order.get(row.trend_label, 9), -row.current_count, row.category))
+    return TrendSummaryRead(
+        current_period=current_label,
+        previous_period=previous_label,
+        chart=chart,
+        categories=rows,
+    )
 
 
 @app.get("/api/clusters", response_model=list[ClusterRead])

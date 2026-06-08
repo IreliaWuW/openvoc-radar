@@ -1,4 +1,4 @@
-import type { Cluster, Metrics, ProductAction, Report, TrendPoint, VocItem } from "@/lib/types";
+import type { Cluster, Metrics, ProductAction, Report, TrendPoint, TrendSummary, VocItem } from "@/lib/types";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://127.0.0.1:8000";
 
@@ -22,6 +22,7 @@ export const api = {
   metrics: () => request<Metrics>("/api/metrics"),
   items: () => request<VocItem[]>("/api/items"),
   trends: () => request<TrendPoint[]>("/api/trends"),
+  trendSummary: () => request<TrendSummary>("/api/trends/summary"),
   clusters: () => request<Cluster[]>("/api/clusters"),
   reports: () => request<Report[]>("/api/reports"),
   createReport: () => request<Report>("/api/reports/weekly", { method: "POST" }),

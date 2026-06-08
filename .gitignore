@@ -12,3 +12,5 @@ node_modules/
 dist/
 build/
 uploaded_tickets.csv
+local-launch-assets/
+docs/assets/

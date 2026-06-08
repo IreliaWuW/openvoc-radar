@@ -72,7 +72,17 @@ Explain:
 - This is a placeholder for future embedding-based similarity.
 - The MVP keeps the method explainable for demo and review.
 
-### 6. Weekly Report
+### 6. Issue Trends
+
+Open **Trends**.
+
+Explain:
+
+- Use the Trends page to review which issue types are rising, new, persistent, or converging across periods.
+- The comparison is period-over-period across the synthetic sample data, not YoY or MoM.
+- Representative source ticket IDs stay visible for review.
+
+### 7. Weekly Report
 
 Open **Reports** and click **Generate weekly report**.
 
@@ -82,7 +92,7 @@ Explain:
 - It includes derived counts only.
 - Each open issue includes source ticket IDs.
 
-### 7. Product Action Drafts
+### 8. Product Action Drafts
 
 Open **Product Actions** and click **Generate drafts**.
 
@@ -92,7 +102,7 @@ Explain:
 - Feature request items become feature request drafts.
 - Drafts include the source ticket IDs needed for product triage.
 
-### 8. Slack and Feishu/Lark Webhooks
+### 9. Slack and Feishu/Lark Webhooks
 
 On Reports, click Slack or Lark without webhook URLs configured.
 
@@ -100,7 +110,7 @@ Explain:
 
 "Webhooks are optional. In local demo mode, the app returns a safe not-configured message. If a webhook URL is added to `backend/.env`, the same report can be pushed out."
 
-### 9. Close
+### 10. Close
 
 "The project is intentionally not a finished platform. It is a verified MVP showing a practical support-to-product feedback loop, responsible AI fallback behavior, and evidence-backed outputs."
 

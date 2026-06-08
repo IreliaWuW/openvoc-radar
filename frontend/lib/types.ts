@@ -30,6 +30,23 @@ export type TrendPoint = {
   count: number;
 };
 
+export type TrendCategory = {
+  category: string;
+  current_count: number;
+  previous_count: number;
+  change_percent: number | null;
+  trend_label: "New" | "Rising" | "Persistent" | "Converging";
+  high_severity_count: number;
+  source_ticket_ids: string[];
+};
+
+export type TrendSummary = {
+  current_period: string | null;
+  previous_period: string | null;
+  chart: Array<Record<string, number | string>>;
+  categories: TrendCategory[];
+};
+
 export type Cluster = {
   cluster_key: string;
   title: string;

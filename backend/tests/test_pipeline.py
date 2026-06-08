@@ -31,6 +31,12 @@ def test_sample_import_report_and_drafts(tmp_path, monkeypatch):
     assert metrics["total_tickets"] == imported["imported"]
     assert metrics["total_voc_items"] == imported["classified_items"]
 
+    trends = client.get("/api/trends/summary").json()
+    assert trends["current_period"]
+    assert trends["previous_period"]
+    assert trends["chart"]
+    assert all(row["source_ticket_ids"] for row in trends["categories"])
+
     report = client.post("/api/reports/weekly").json()
     assert "Source tickets:" in report["markdown"]
     assert report["source_ticket_ids"]

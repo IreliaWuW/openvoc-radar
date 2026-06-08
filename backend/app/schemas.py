@@ -52,6 +52,23 @@ class TrendPoint(BaseModel):
     count: int
 
 
+class TrendCategoryRead(BaseModel):
+    category: str
+    current_count: int
+    previous_count: int
+    change_percent: float | None
+    trend_label: str
+    high_severity_count: int
+    source_ticket_ids: list[str]
+
+
+class TrendSummaryRead(BaseModel):
+    current_period: str | None
+    previous_period: str | None
+    chart: list[dict[str, int | str]]
+    categories: list[TrendCategoryRead]
+
+
 class ClusterRead(BaseModel):
     cluster_key: str
     title: str
