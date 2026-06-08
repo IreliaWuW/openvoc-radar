@@ -34,12 +34,12 @@ It is not a finished enterprise platform. It is a portfolio-quality MVP that sho
 
 ## Screenshots
 
-Screenshot placeholders for the GitHub repo:
+Planned screenshot locations:
 
-- Overview dashboard: add `docs/screenshots/overview.png`
-- Issue clusters: add `docs/screenshots/issue-clusters.png`
-- Weekly report: add `docs/screenshots/weekly-report.png`
-- Product action drafts: add `docs/screenshots/product-actions.png`
+- Overview dashboard: `docs/screenshots/overview.png`
+- Issue clusters: `docs/screenshots/issue-clusters.png`
+- Weekly report: `docs/screenshots/weekly-report.png`
+- Product action drafts: `docs/screenshots/product-actions.png`
 
 No screenshots are committed yet.
 
@@ -113,7 +113,6 @@ AI and integrations:
 From the project root:
 
 ```powershell
-cd C:\Users\Carol\Desktop\openvoc-radar
 Copy-Item .env.example backend\.env
 Copy-Item .env.example frontend\.env.local
 ```
@@ -121,37 +120,40 @@ Copy-Item .env.example frontend\.env.local
 Create and start the backend:
 
 ```powershell
-cd C:\Users\Carol\Desktop\openvoc-radar\backend
-& 'C:\Users\Carol\AppData\Local\Python\pythoncore-3.14-64\python.exe' -m venv .venv
+cd backend
+python -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe -m pytest
 .\.venv\Scripts\python.exe -m uvicorn app.main:app --reload
 ```
 
 Start the frontend in a second terminal:
 
 ```powershell
-cd C:\Users\Carol\Desktop\openvoc-radar\frontend
+cd frontend
 npm.cmd install
 npm.cmd run dev
 ```
 
 Open `http://localhost:3000`.
 
+If `python` is not available on Windows, try `py -3 -m venv .venv`, or install Python 3.11+ and add it to PATH.
+
 ## Backend Commands
 
 ```powershell
-cd C:\Users\Carol\Desktop\openvoc-radar\backend
+cd backend
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
 .\.venv\Scripts\python.exe -m pytest
 .\.venv\Scripts\python.exe -m uvicorn app.main:app --reload
 ```
 
-Python 3.14.5 has been verified for this project. Python 3.11 or 3.12 should also be suitable for this stack.
+Python 3.14.5 has been verified for this project. Python 3.11+ should also be suitable for this stack.
 
 ## Frontend Commands
 
 ```powershell
-cd C:\Users\Carol\Desktop\openvoc-radar\frontend
+cd frontend
 npm.cmd install
 npm.cmd run check
 npm.cmd run build

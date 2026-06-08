@@ -1,4 +1,4 @@
-# Product Requirements Document
+# Product Brief
 
 ## Product Name
 
@@ -8,7 +8,7 @@ OpenVoC Radar
 
 A local open-source MVP that turns synthetic support tickets into evidence-backed voice-of-customer insights, weekly reports, and product action drafts.
 
-## Problem
+## Context
 
 Customer feedback often lives in support tools, chat systems, and ticket queues. Product teams need to identify repeated issues and customer requests, but summaries lose trust when they are not tied back to source conversations.
 

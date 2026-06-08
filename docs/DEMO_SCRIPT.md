@@ -7,14 +7,14 @@ Open two terminals.
 Backend:
 
 ```powershell
-cd C:\Users\Carol\Desktop\openvoc-radar\backend
+cd backend
 .\.venv\Scripts\python.exe -m uvicorn app.main:app --reload
 ```
 
 Frontend:
 
 ```powershell
-cd C:\Users\Carol\Desktop\openvoc-radar\frontend
+cd frontend
 npm.cmd run dev
 ```
 
