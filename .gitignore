@@ -1,0 +1,14 @@
+.env
+*.db
+*.sqlite
+__pycache__/
+.pytest_cache/
+.pytest-tmp/
+.venv/
+node_modules/
+.next/
+*.log
+*.tsbuildinfo
+dist/
+build/
+uploaded_tickets.csv

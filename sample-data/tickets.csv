@@ -1,0 +1,13 @@
+ticket_id,source,user_id,user_email,created_at,subject,body,product_area,tags
+SYN-1001,csv,u-101,alex@example.test,2026-05-27T09:15:00Z,CSV export fails on filtered dashboard,"When I filter by region and export CSV, the download fails with an error. This blocks my Monday reporting.",Analytics,"export,csv,error"
+SYN-1002,csv,u-101,alex@example.test,2026-05-27T11:10:00Z,CSV download still broken,"The same filtered dashboard CSV export failed again two hours later. I need the ticket list for leadership.",Analytics,"export,csv,duplicate"
+SYN-1003,csv,u-205,mina@example.test,2026-05-28T14:22:00Z,Please add weekly digest controls,"It would be helpful to choose which teams receive the weekly digest and preview it before sending.",Reports,"feature,digest"
+SYN-1004,csv,u-330,jon@example.test,2026-05-29T08:05:00Z,Login loop after password reset,"After resetting my password I keep getting sent back to sign in. I cannot access the workspace.",Auth,"login,password,blocked"
+SYN-1005,csv,u-331,priya@example.test,2026-05-29T16:48:00Z,Invoice label is confusing,"The invoice says platform usage but the billing page says seats. My finance team is asking what the charge means.",Billing,"invoice,pricing"
+SYN-1006,csv,u-412,leo@example.test,2026-05-30T10:30:00Z,Mobile view cuts off table columns,"On iPhone, the issue cluster table hides source ticket IDs unless I rotate the screen.",Mobile,"mobile,usability"
+SYN-1007,csv,u-101,alex@example.test,2026-05-31T09:18:00Z,CSV export is slow but works,"The export completed today, but it took almost five minutes for a small filtered dashboard.",Analytics,"export,performance"
+SYN-1008,csv,u-520,sam@example.test,2026-06-01T13:00:00Z,Slack report formatting request,"Can the Slack report include bullet spacing and source ticket IDs under each insight?",Reports,"slack,feature"
+SYN-1009,csv,u-620,nora@example.test,2026-06-02T18:40:00Z,Notification emails arrive late,"Alert emails for new high severity issues arrived about an hour late yesterday.",Notifications,"email,alerts"
+SYN-1010,csv,u-621,casey@example.test,2026-06-03T09:55:00Z,Search times out for old tickets,"Searching tickets older than six months times out and shows a failed request message.",Search,"timeout,performance"
+SYN-1011,csv,u-700,taylor@example.test,2026-06-04T12:05:00Z,Need Zendesk connector,"We use Zendesk as the source of truth and would like an import connector before rollout.",Integrations,"zendesk,feature"
+SYN-1012,csv,u-701,riley@example.test,2026-06-05T15:35:00Z,Intercom import question,"Can OpenVoC Radar pull Intercom conversations and preserve the original conversation IDs?",Integrations,"intercom,question"
